@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brother's Program</title>
+    <style>
+      .app {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        background-color: aliceblue;
+      }
+
+      .app * {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      .tile {
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -12rem;
+        width: 12rem;
+        height: 3rem;
+        text-align: center;
+        line-height: 3rem;
+        border-radius: 8px;
+        color: black;
+        transition: all 2s;
+        box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+      }
+
+      .showIt {
+        right: calc(50% - 15rem);
+        opacity: 1;
+        width: 30rem;
+        height: 6rem;
+        top: 10%;
+        font-size: 2rem;
+        line-height: 6rem;
+      }
+
+      .hideIt {
+        top: 0;
+        right: 100%;
+        opacity: 0;
+        line-height: 3rem;
+        width: 6rem;
+        height: 3rem;
+        font-size: 0.5rem;
+      }
+    </style>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="app">
+    <script type="text/javascript">
+      const phrases = [
+        'water on the hill',
+        'fire in the hole',
+        'area confirmed',
+        'rock on the ground',
+        'wind from the landscape',
+        'Lightning on the road',
+        'area detected',
+        'blood in the bath',
+        'kids in the basement',
+        'the shadows from the grave',
+      ];
+      const updateBlock = (i) => {
+        const lastBlock = i === 0 ? phrases.length - 1 : i - 1;
+        const newBlock = i === phrases.length - 1 ? 0 : i;
+        const lastBlockEl = document.getElementById(`block_${lastBlock}`);
+        const newBlockEl = document.createElement('div');
+
+        const colorOption = i % 2 === 0 ? 0 : 1;
+        if (lastBlockEl) lastBlockEl.remove();
+        newBlockEl.className = `tile ${phrases[i].replace(/ /g, '')}`;
+        newBlockEl.textContent = phrases[i];
+        newBlockEl.id = `block_${newBlock}`;
+        // newBlockEl.style.backgroundColor = colors[colorOption];
+
+        document.body.appendChild(newBlockEl);
+
+        setTimeout(() => {
+          newBlockEl.classList.add('showIt');
+        }, 100);
+        setTimeout(() => {
+          newBlockEl.classList.add('hideIt');
+        }, 2500);
+      };
+      const startAnimation = () => {
+        let i = 0;
+        
+        updateBlock(i++);
+        setInterval(() => {
+          updateBlock(i);
+          i = i === phrases.length - 1 ? 0 : i + 1;
+        }, 4000);
+      };
+
+      startAnimation();
+    </script>
+  </body>
+</html>
